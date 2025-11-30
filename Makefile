@@ -1,7 +1,7 @@
 # --- CONFIGURATION (CRITICAL HARDCODED PATHS) ---
 # Paste the ABSOLUTE path to your 32-bit i686-elf/bin folder here.
 # Example: /home/nothing/toolchain_fix/i686-elf-tools-linux/bin
-TOOLCHAIN_DIR = /home/nothing/i686-elf-folder
+TOOLCHAIN_DIR = /home/nothing/i686-elf-tools
 
 CC      = $(TOOLCHAIN_DIR)/bin/i686-elf-g++
 LD      = $(TOOLCHAIN_DIR)/bin/i686-elf-ld
