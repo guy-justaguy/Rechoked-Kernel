@@ -10,7 +10,7 @@
 # define NORETURN
 #endif
 
-extern "C"  void **_kernel_main**()  
+extern "C"  void **kernel_main**()  
 
 // Forward declarations for kernel subsystems
 void initialize_vga_console();
@@ -50,3 +50,4 @@ extern "C" NORETURN void _kernel_main() {
     // 5. Never return — keep the kernel running until explicit shutdown
     halt_loop();
 }
+
