@@ -38,7 +38,7 @@ extern "C" NORETURN void _kernel_main() {
     initialize_vga_console();
 
     // 2. Print a welcome message
-    kprint("Gumball Kernel/\n");
+    kprint("RechakedKrnl/\n");
 
     // 3. Initialize core features
     initialize_interrupts();
