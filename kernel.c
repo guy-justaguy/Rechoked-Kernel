@@ -1,4 +1,4 @@
-// Ensure the compiler doesn't mangle this name so the assembly can find it.
+include stdio.h
 
 // Compiler-agnostic noreturn macro so the toolchain knows this function
 // will never return to its caller.
@@ -50,5 +50,6 @@ extern "C" NORETURN void _kernel_main() {
     // 5. Never return — keep the kernel running until explicit shutdown
     halt_loop();
 }
+
 
 
