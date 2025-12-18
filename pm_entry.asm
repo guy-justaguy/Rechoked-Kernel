@@ -19,4 +19,6 @@ protected_mode_start:
     mov EAX, CR0 ; 3. Load the CR0 register to enable protected mode
     or EAX, 1    ; Set the PE (Protection Enable) bit 
  ; 4. Jump to the C++ Kernel Entry Point
+esp, -16
 jmp kernel_main ; Or call kernel_main if using OTHER syntax
+
