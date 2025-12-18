@@ -14,7 +14,7 @@ extern "C"  void **kernel_main**()
 
 // Forward declarations for kernel subsystems
 void initialize_vga_console();
-void kprint(const char*);
+void printf(const char*);
 void initialize_interrupts();
 void initialize_memory_manager();
 void launch_init_process();
@@ -38,7 +38,7 @@ extern "C" NORETURN void _kernel_main() {
     initialize_vga_console();
 
     // 2. Print a welcome message
-    kprint("RechakedKrnl/\n");
+    kprint("RechokedKrnl/\n");
 
     // 3. Initialize core features
     initialize_interrupts();
@@ -50,6 +50,7 @@ extern "C" NORETURN void _kernel_main() {
     // 5. Never return — keep the kernel running until explicit shutdown
     halt_loop();
 }
+
 
 
 
