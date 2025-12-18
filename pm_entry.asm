@@ -10,7 +10,8 @@ protected_mode_start:
 
     ; Set up the 32-bit stack pointer for the kernel
     mov esp, 0x90000 ; A temporary safe stack location 
-    
+       mov esp, stack_top
+    and esp, -16
     ; *** Next step is to load the kernel binary from disk! ***
     ; 2. Set up the 32-bit Stack Pointer (ESP)
     ; Choose a high address (e.g., 1MB + 64KB) as a safe temporary stack
@@ -18,7 +19,21 @@ protected_mode_start:
     
     mov EAX, CR0 ; 3. Load the CR0 register to enable protected mode
     or EAX, 1    ; Set the PE (Protection Enable) bit 
+
+    ; 3. Pass Multiboot info to C
+    push ebx          ; Pointer to Multiboot info (The map!)
+    push eax          ; The Magic Number (0x2BADB002)
  ; 4. Jump to the C++ Kernel Entry Point
-esp, -16
 jmp kernel_main ; Or call kernel_main if using OTHER syntax
+5. The Eternal Hang (If kernel_main ever returns)
+    cli
+.hang:
+    hlt
+    jmp .hang
+
+section .bss
+align 16
+stack_bottom:
+    resb 16384        ; 16KB of raw stack space
+stack_top:
 
