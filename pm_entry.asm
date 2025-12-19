@@ -1,4 +1,4 @@
-[BITS 32] 
+[BITS 64] 
 
 --- MULTIBOOT HEADER (The GRUB Handshake) ---
 MBOOT_PAGE_ALIGN    equ 1 << 0
@@ -24,15 +24,26 @@ protected_mode_start:
 
     ; Set up the 32-bit stack pointer for the kernel
     mov esp, 0x90000 ; A temporary safe stack location 
-       mov esp, stack_top
-    and esp, -16
+       mov rsp, stack_top
+    and rsp, -16
     ; *** Next step is to load the kernel binary from disk! ***
-    ; 2. Set up the 32-bit Stack Pointer (ESP)
+    ; 2. Set up the 64-bit Stack Pointer (RSP)
     ; Choose a high address (e.g., 1MB + 64KB) as a safe temporary stack
-    mov esp, 0x110000 
-    
-    mov EAX, CR0 ; 3. Load the CR0 register to enable protected mode
-    or EAX, 1    ; Set the PE (Protection Enable) bit 
+    mov rsp, 0x110000 
+
+     mov cr0,eax
+
+; Step 1: Prep CR4 for 64-bit features
+mov rax, cr4        ; Get the CR4 bucket
+or rax, 1 << 5      ; Set the PAE bit (Physical Address Extension)
+mov cr4, rax        ; Pour it back. Now the CPU can handle 64-bit tables.
+
+; Step 2: Enable Paging in CR0
+mov rax, cr0        ; Get the CR0 bucket
+or rax, 1 << 31     ; Set the PG bit (Paging)
+mov cr0, rax        ; Pour it back. "Ching!" You are now in 64-bit mode.
+
+
 
     ; 3. Pass Multiboot info to C
     push ebx          ; Pointer to Multiboot info (The map!)
@@ -50,5 +61,6 @@ align 16
 stack_bottom:
     resb 16384        ; 16KB of raw stack space
 stack_top:
+long_mode_start:
 
 
