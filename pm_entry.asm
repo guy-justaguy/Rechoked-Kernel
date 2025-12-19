@@ -22,7 +22,7 @@ protected_mode_start:
     mov gs, ax
     mov ss, ax
 
-    ; Set up the 32-bit stack pointer for the kernel
+    ; Set up the 64-bit stack pointer for the kernel
     mov esp, 0x90000 ; A temporary safe stack location 
        mov rsp, stack_top
     and rsp, -16
@@ -62,5 +62,6 @@ stack_bottom:
     resb 16384        ; 16KB of raw stack space
 stack_top:
 long_mode_start:
+
 
 
